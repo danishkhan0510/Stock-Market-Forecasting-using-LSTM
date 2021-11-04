@@ -1,2 +1,8 @@
 # Stock-Market-Forecasting-using-LSTM
-We try to forecast Apple's stock prices using LSTM
+**Data** - https://www.tiingo.com/ This is the website from which we are getting the data. You can sign up and access your Api Key from the API section on the webpage. The package pandas_datareader has a built in function to access any stock data. You just have to give the ticker symbol of the company along with your Api Key. For your ease I am giving the data set for Apple which you can directly use. It has Apple's stock information from May 2015 to May 2020.  
+We will use the Close column for our analysis. We split the dataset into training and testing sets. Here we can not use train test split as it will randomly split the data. As it is a time series problem we need to preserve the sequence of data.  
+You'll notice that we do not have any dependent variable here. It's because this is a time series problem and each day's data is the dependent variable itself. For example today's price is the dependent value and the last 10 days prices are the independent values. The number of previous days you select here is the time step and usually it is good to have a higher value for it. I have taken 100 days but you can experiment with the value and check model performance.  
+**Note** - LSTM is sensitive to the scale of the data. We use Min Max Scalar first.  
+We create a custom function to do this exactly and now we have a 2D array. LSTM needs a 3D array so we reshape it. We create a sequential model and add LSTM layers with a final dense layer. We are using mean_squared_error to calculate loss and the optimizer is adam. We run it for 100 epochs. You can use dropout layers and early stopping too to avoid over-fitting.  
+We get the predicted values and inverse scale it. Finally we are plotting the past and future data together.
+
